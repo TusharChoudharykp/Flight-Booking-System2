@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const { Enums } = require("../utils/common");
+const { BOOKED, CANCELLED, INITIATED, PENDING } = Enums.BOOKING_STATUS;
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     /**
@@ -23,11 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.ENUM,
-        values: [],
+        values: [BOOKED, CANCELLED, INITIATED, PENDING],
+        defaultValue: INITIATED,
+        allowNull: false,
       },
       noOfSeats: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 1,
       },
       totalCost: {
         type: DataTypes.INTEGER,
